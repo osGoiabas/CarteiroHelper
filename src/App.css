@@ -75,7 +75,10 @@ button:hover{
 }
 
 .todo-form{
-  padding-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  width: 500px;
 }
 
 input, select {
@@ -102,12 +105,79 @@ input, select {
   flex: 1 1 0;
 }
 
-
 form {
   display: flex;
   flex-direction: column;
 }
+
 label{
   display: flex;
   flex-direction: column;
+}
+
+
+
+
+
+
+
+.todo-form label {
+  color: #000;
+  font-weight: 500;
+}
+
+.todo-form input {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #444;
+  color: #eee;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  outline: 1px solid 444;
+}
+
+.todo-form input::placeholder {
+  color: #999;
+}
+
+.todo-form .input-error {
+  outline: 1px solid rgb(255, 72, 72);
+}
+
+.todo-form .error-message {
+  color: rgb(255, 72, 72);
+  font-size: 0.75rem;
+  margin-top: 8px;
+}
+
+.todo-form select {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #444;
+  color: #eee;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.todo-form button {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: #eee;
+  background-color: #49a1b8;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all 500ms ease;
+}
+
+.todo-form button:hover {
+  cursor: pointer;
+  background-color: #61dbfb;
 }

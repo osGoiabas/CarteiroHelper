@@ -1,53 +1,120 @@
-import { useState }  from 'react'
+import { useForm } from 'react-hook-form';
 
-const TodoForm = ({addTodo}) => {
-  const [cep, setCep] = useState('')
-  const [numero, setNumero] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [prioridade, setPrioridade] = useState('')
-  
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!cep || !numero || !complemento || !prioridade) return;
-    addTodo(cep, numero, complemento, prioridade)
-    setCep("")
-    setNumero("")
-    setComplemento("")
-    setPrioridade("")
+const TodoForm = () => {
+  const {
+    register, 
+    handleSubmit, 
+    setValue, 
+    setFocus,
+    formState: {errors}, 
+  } = useForm();
+
+
+  console.log(errors);
+  console.log("RENDER");
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const checkCep = (e) => {
+    const cep = e.target.value.replace(/\D/g, '');
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(res => res.json()).then(data => {
+        setValue('address', data.logradouro);
+        setValue('neighborhood', data.bairro);
+        setValue('city', data.localidade);
+        setValue('state', data.uf);
+        setFocus('addressNumber');
+      });
   }
 
-  return <div className='todo-form'>
-    <h2>Adicionar endereço: </h2>
-    <form onSubmit={handleSubmit}>
-      <b>CEP:</b> <input 
-        type='text' 
-        placeholder='Digite o CEP (apenas números)' 
-        value={cep}
-        onChange={(e) => setCep(e.target.value)} 
-      />
-      <b>Número:</b> <input 
-        type='text' 
-        placeholder='(Digite o número)' 
-        value={numero}
-        onChange={(e) => setNumero(e.target.value)} 
-      />
-      <b>Complemento:</b> <input 
-        type='text' 
-        placeholder='(Digite o complemento)' 
-        value={complemento}
-        onChange={(e) => setComplemento(e.target.value)} 
-      />
+  return (
+    <div className='todo-form'>
+      <label>
+        CEP: 
+        <input 
+          className={errors?.cep && "input-error"}
+          type='text' 
+          placeholder='Digite o CEP'
+          {...register("cep", {required: true})} 
+          onBlur={checkCep}
+        />
+        {errors?.cep?.type === 'required' && <p className='error-message'>É obrigatório inserir o CEP.</p>}
+      </label>
+      <label>
+        Logradouro:
+        <input 
+          className={errors?.address && "input-error"}
+          type="text" 
+          placeholder='Digite o logradouro'
+          {...register("address", {required: true})} 
+        />
+        {errors?.address?.type === 'required' && <p className='error-message'>É obrigatório inserir o logradouro.</p>}
+      </label>
+      <label>
+        Número:
+        <input 
+          className={errors?.addressNumber && "input-error"}
+          type="text" 
+          placeholder='Digite o número'
+          {...register("addressNumber", {required: true})}  
+        />
+        {errors?.addressNumber?.type === 'required' && <p className='error-message'>É obrigatório inserir o número.</p>}
+      </label>
+      <label>
+        Complemento (opcional):
+        <input 
+          type="text" 
+          placeholder='Digite o complemento (se houver)'
+          {...register("addressExtra")}
+        />
+      </label>
+      <label>
+        Bairro:
+        <input 
+          className={errors?.neighborhood && "input-error"}
+          type="text" 
+          placeholder='Digite o bairro'
+          {...register("neighborhood", {required: true})} 
+        />
+        {errors?.neighborhood?.type === 'required' && <p className='error-message'>É obrigatório inserir o bairro.</p>}
+      </label>
+      <label>
+        Cidade:
+        <input 
+          className={errors?.city && "input-error"}
+          type="text" 
+          placeholder='Digite a cidade'
+          {...register("city", {required: true})} 
+        />
+        {errors?.city?.type === 'required' && <p className='error-message'>É obrigatório inserir a cidade.</p>}
+      </label>
+      <label>
+        UF:
+        <input 
+          className={errors?.state && "input-error"}
+          type="text" 
+          placeholder='Digite a UF'
+          {...register("state", {required: true})}  
+        />
+        {errors?.state?.type === 'required' && <p className='error-message'>É obrigatório inserir a UF.</p>}
+      </label>
       <select 
-        value={prioridade} 
-        onChange={(e) => setPrioridade(e.target.value)}
+        className={errors?.prioridade && "input-error"}
+        {...register("prioridade", 
+        {validate: (value) =>{
+          return value != ''
+        }})} 
       >
         <option value=''>Selecione a prioridade</option>
         <option value='Urgente'>Urgente</option>
         <option value='Normal'>Normal</option>
       </select>
-    <button type='submit'>Adicionar endereço</button>
-    </form>
-  </div>
+      {errors?.prioridade?.type === 'validate' && <p className='error-message'>É obrigatório selecionar a prioridade.</p>}
+      <button onClick={() => handleSubmit(onSubmit)()}>Adicionar à lista</button>
+    </div>
+  )
 }
 
 export default TodoForm
