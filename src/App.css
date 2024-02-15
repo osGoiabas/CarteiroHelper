@@ -3,7 +3,7 @@ body {
   background-color: #f4f4f4;
   padding: 30px;
   color: #333;
-  background-image: url('./img/cidade-praia.jpg');
+  background: linear-gradient(#212b46,#121212);
   background-position: center;
   background-size: stretch;
 }
@@ -86,7 +86,7 @@ input, select {
   width: 100%;
 }
 
-.filter, .search {
+.filter, .search, .todo-form {
   border-bottom: 1px solid #555;
   margin-bottom: 20px;
   padding-bottom: 20px;
@@ -100,4 +100,14 @@ input, select {
 
 .filter-options div{
   flex: 1 1 0;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+label{
+  display: flex;
+  flex-direction: column;
 }
