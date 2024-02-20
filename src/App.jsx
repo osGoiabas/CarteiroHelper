@@ -11,13 +11,13 @@ function App() {
   const [todos, setTodos] = useState([
     {
       id: 1,
-      cep: "58051540",
-      address: "",
-      neighborhood: "",
-      city: "",
-      state: "", 
-      addressNumber: "",
-      addressExtra: "Apto 301B",
+      cep: "00000000",
+      address: "Rua dos Bobos",
+      neighborhood: "Jardim Bobo",
+      city: "Bobocity",
+      state: "BB", 
+      addressNumber: "000",
+      addressExtra: "Apto 0",
       prioridade: "Urgente",
       isCompleted: false,
     },
@@ -27,7 +27,16 @@ function App() {
   const [filter, setFilter] = useState("All")
   const [sort, setSort] = useState("Asc")
 
-  const addTodo = () => {
+  const addTodo = (
+    cep,
+    address,
+    neighborhood,
+    city,
+    state, 
+    addressNumber,
+    addressExtra,
+    prioridade,
+  ) => {
     const newTodos = [
       ...todos,
       {
@@ -62,19 +71,10 @@ function App() {
     setTodos(newTodos);
   }
 
-
-
-
-
-
-  
-
-
-
   return (
   <div className='app'>
 
-    <TodoForm /* addTodo={addTodo} *//>
+    <TodoForm  addTodo={addTodo} />
     <h1>Endereços a visitar</h1>
     <Search search={search} setSearch={setSearch} />
     <Filter filter={filter} setFilter={setFilter} setSort={setSort}/>

@@ -8,7 +8,7 @@ const Todo = ({ todo, removeTodo, completeTodo }) => {
     >
       <div className='content'>
         <p className='cep'>CEP: {todo.cep}</p>
-        <p className='adress'>Logradouro: {todo.adress}</p>
+        <p className='address'>Logradouro: {todo.address}</p>
         <p className='neighborhood'>Bairro: {todo.neighborhood}</p>
         <p className='city'>Cidade: {todo.city}</p>
         <p className='state'>UF: {todo.state}</p>
