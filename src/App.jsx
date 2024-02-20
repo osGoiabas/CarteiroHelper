@@ -74,35 +74,38 @@ function App() {
   return (
   <div className='app'>
 
-    <TodoForm  addTodo={addTodo} />
-    <h1>Endereços a visitar</h1>
-    <Search search={search} setSearch={setSearch} />
-    <Filter filter={filter} setFilter={setFilter} setSort={setSort}/>
-    <div className='todo-list'>
-      {todos
-        .filter((todo) => 
-          filter === "All" 
-            ? true 
-            : filter === "Completed"
-              ? todo.isCompleted
-              : !todo.isCompleted
-        )
-        .filter((todo) => 
-          todo.cep.toLowerCase().includes(search.toLowerCase())
-        )
-        .sort((a, b) =>
-          sort === "Asc" 
-            ? a.cep.localeCompare(b.cep) 
-            : b.cep.localeCompare(a.cep)
-        )
-        .map((todo) => (
-          <Todo 
-            key={todo.id} 
-            todo={todo} 
-            removeTodo={removeTodo} 
-            completeTodo={completeTodo}
-          />
-        ))}
+    <div className='todo-wrapper'>
+      <h1>Adicione um endereço:</h1>
+      <TodoForm  addTodo={addTodo} />
+      <h1>Endereços a visitar</h1>
+      <Search search={search} setSearch={setSearch} />
+      <Filter filter={filter} setFilter={setFilter} setSort={setSort}/>
+      <div className='todo-list'>
+        {todos
+          .filter((todo) => 
+            filter === "All" 
+              ? true 
+              : filter === "Completed"
+                ? todo.isCompleted
+                : !todo.isCompleted
+          )
+          .filter((todo) => 
+            todo.cep.toLowerCase().includes(search.toLowerCase())
+          )
+          .sort((a, b) =>
+            sort === "Asc" 
+              ? a.cep.localeCompare(b.cep) 
+              : b.cep.localeCompare(a.cep)
+          )
+          .map((todo) => (
+            <Todo 
+              key={todo.id} 
+              todo={todo} 
+              removeTodo={removeTodo} 
+              completeTodo={completeTodo}
+            />
+          ))}
+      </div>
     </div>
   </div>
   )
